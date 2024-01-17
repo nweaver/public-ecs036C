@@ -108,7 +108,7 @@ class Card(val face:Face,val suite:Suite){
      *
      * This uses the convention that ace is high
      */
-    fun compareTo(b: Card) : Int{
+    operator fun compareTo(b: Card) : Int{
         if (this == b) return 0
         if (this.face < b.face) return -1
         if (this.face > b.face) return 1
