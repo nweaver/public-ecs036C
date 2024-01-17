@@ -27,7 +27,6 @@ enum class Suite {
             DIAMOND -> "♦"
         }
     }
-
 }
 
 /**
@@ -60,12 +59,12 @@ enum class Face {
 }
 
 /**
- * And this is a "Data Class" for an individual card.
+ * And this is a class for an individual card.
  *
  * In particular it has a nice customized toString,
  * an overriden equals function, and a comparison function
  * that prioritizes the face value (ace is high) and then the
- * suite value in case of ties
+ * suite value in case of ties.
  */
 class Card(val face:Face,val suite:Suite){
     override fun toString(): String {
@@ -123,7 +122,7 @@ class Card(val face:Face,val suite:Suite){
  * So this is a wrapper for Java's SecureRandom into a Kotlin random
  * object to use in the code
  */
-val secureRNG = SecureRandom().asKotlinRandom()
+private val secureRNG = SecureRandom().asKotlinRandom()
 
 
 class Deck(){
