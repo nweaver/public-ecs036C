@@ -2,6 +2,7 @@ package edu.ucdavis.cs.ecs036c
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.util.Arrays.asList
 
 
 class PlaygroundTest{
@@ -24,4 +25,11 @@ class PlaygroundTest{
         // recursive(1)
     }
 
+    @Test
+    fun showFoldCoolness(){
+        val data = asList(1, 2, 3, 4, 5, 6)
+        println(data)
+        val sum = data.fold(1){x, y -> x * y}
+        println(sum)
+    }
 }

@@ -9,3 +9,4 @@ fun allPositiveNumbers(): Sequence<Long> {
     }
     return Numbers(1).asSequence()
 }
+
