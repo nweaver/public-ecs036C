@@ -252,22 +252,20 @@ class LinkedList:
             length = 0
             for x in cells:
                 length += 1
-            l2 = cells
+            end_of_first = cells
             i = 0
             while i < (length // 2 - 1):
-                l2 = l2.tail
+                end_of_first = end_of_first.tail
                 i += 1
-            ret = l2.tail
-            l2.tail = None
-            return (cells, ret)
+            start_of_second = end_of_first.tail
+            end_of_first.tail = None
+            return (cells, start_of_second)
         
         def sort_internal(cells):
             """This takes the internal cells, rather than the whole
             thing.  It returns just the start
             """
-            if cells == None:
-                return None
-            elif cells.tail == None:
+            if cells.tail == None:
                 return cells
             l1, l2 = list_split(cells)
             l1 = sort_internal(l1)
