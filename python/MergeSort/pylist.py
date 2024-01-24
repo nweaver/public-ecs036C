@@ -172,8 +172,8 @@ class LinkedList:
         if index == 0:
             # Adding one new cell on tail.
             self.length = self.length + 1
-            self.tail.tail = self.LinkedListCell(data, None)
-            self.tail = self.tail.tail
+            self.end.tail = self.LinkedListCell(data, None)
+            self.end = self.end.tail
             return
         raise IndexError
 
@@ -195,7 +195,7 @@ class LinkedList:
             self.length = self.length - 1
             self.start = self.start.tail
             if self.start == None:
-                self.tail = None
+                self.end = None
             return
         for cell in self.start:
             if index == 1:
@@ -205,7 +205,7 @@ class LinkedList:
                     if cell.tail == None:
                         # Have to handle the corner case of deleting
                         # the last item.
-                        self.tail = cell
+                        self.end = cell
                     return
                 else:
                     raise IndexError
@@ -217,7 +217,7 @@ class LinkedList:
         self.length = self.length + 1
         self.start = self.LinkedListCell(data, self.start)
         if self.length == 1:
-            self.tail = self.start
+            self.end = self.start
 
     def append(self, data):
         """Add an elemnet to the back of the list.
@@ -228,10 +228,10 @@ class LinkedList:
         self.length = self.length + 1
         if self.start == None:
             self.start = self.LinkedListCell(data, None)
-            self.tail = self.start
+            self.end = self.start
             return
-        self.tail.tail = self.LinkedListCell(data, None)
-        self.tail = self.tail.tail
+        self.end.tail = self.LinkedListCell(data, None)
+        self.end = self.end.tail
 
     def __len__(self):
         """Implements the len(list) operation.
@@ -315,4 +315,4 @@ class LinkedList:
         self.start = sort_internal(self.start)
 
         for x in self.start:
-            self.tail = x
+            self.end = x
