@@ -174,6 +174,7 @@ class TestListMethods(unittest.TestCase):
         result = sorted(deck, key=cards.suite_key)
         for i in range(len(result)):
             self.assertEqual(result[i], ll[i])
+            
 
     def test_stable_reverse(self):
         deck = cards.make_deck()
