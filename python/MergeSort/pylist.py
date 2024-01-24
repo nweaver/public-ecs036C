@@ -267,39 +267,39 @@ class LinkedList:
             """
             if cells.tail == None:
                 return cells
-            l1, l2 = list_split(cells)
-            l1 = sort_internal(l1)
-            l2 = sort_internal(l2)
+            first_half, second_half = list_split(cells)
+            first_half = sort_internal(first_half)
+            second_half = sort_internal(second_half)
             result = None
             at = None
-            if not reverse and l2.key < l1.key:
-                result = l2
-                l2 = l2.tail
-            elif reverse and l1.key < l2.key:
-                result = l2
-                l2 = l2.tail
+            if not reverse and second_half.key < first_half.key:
+                result = second_half
+                second_half = second_half.tail
+            elif reverse and first_half.key < second_half.key:
+                result = second_half
+                second_half = second_half.tail
             else:
-                result = l1
-                l1 = l1.tail
+                result = first_half
+                first_half = first_half.tail
             at = result
             at.tail = None
-            while l1 != None:
-                if l2 == None:
-                    at.tail = l1
+            while first_half != None:
+                if second_half == None:
+                    at.tail = first_half
                     return result
-                elif not reverse and l2.key < l1.key:
-                    at.tail = l2
-                    l2 = l2.tail
-                elif reverse and l1.key < l2.key:
-                    at.tail = l2
-                    l2 = l2.tail
+                elif not reverse and second_half.key < first_half.key:
+                    at.tail = second_half
+                    second_half = second_half.tail
+                elif reverse and first_half.key < second_half.key:
+                    at.tail = second_half
+                    second_half = second_half.tail
                 else:
-                    at.tail = l1
-                    l1 = l1.tail
+                    at.tail = first_half
+                    first_half = first_half.tail
                 at = at.tail
                 at.tail = None
-            if l2 != None:
-                at.tail = l2
+            if second_half != None:
+                at.tail = second_half
 
             return result
             
