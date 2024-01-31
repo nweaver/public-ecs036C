@@ -32,4 +32,55 @@ class PlaygroundTest{
         val sum = data.fold(1){x, y -> x * y}
         println(sum)
     }
+
+    @Test
+    fun testShaHash(){
+        println("Hello, World!\n".sha256)
+    }
+
+    @Test
+    fun testSetCoolness(){
+        val s1 = setOf(1, 2, 3, 4)
+        val s2 = setOf(3,4,5,6)
+        println("${s1 + s2}")
+        println("${s1 - s2}")
+    }
+
+    @Test
+    fun testCastingArray(){
+        val ar : Array<Int?> = arrayOfNulls(5)
+        for(i in 0..<4){
+            ar[i] = i
+        }
+        println(ar[1].toString())
+        println(ar[4].toString())
+        ar as Array<Int>
+        println(ar[1].toString())
+        println(ar[4].toString())
+    }
+
+    @Test
+    fun testCastingArray2(){
+        val ar : Array<Int?> = arrayOfNulls(5)
+        for(i in 0..<4){
+            ar[i] = i
+        }
+        println(ar[1].toString())
+        println(ar[4].toString())
+        ar.requireNoNulls()
+        println(ar[1].toString())
+        println(ar[4].toString())
+    }
+
+    @Test
+    fun testCastingArray3(){
+        val ar : Array<Int?> = arrayOfNulls(5)
+        for(i in 0..<4){
+            ar[i] = i
+        }
+        val x = ar[4] as Int
+        println(x.toString())
+        println(x.toString())
+    }
+
 }
