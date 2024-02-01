@@ -83,4 +83,19 @@ class PlaygroundTest{
         println(x.toString())
     }
 
+    @Test
+    fun iteratorPlayground(){
+        class Foo(val max: Int = 5) {
+            operator fun iterator() = sequence {
+                for (i in 0..<max){
+                    yield(i)
+                }
+            }.iterator()
+        }
+
+        for(i in Foo(5)){
+            println("$i")
+        }
+    }
+
 }
