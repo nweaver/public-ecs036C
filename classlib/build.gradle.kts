@@ -10,7 +10,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+
+//    testImplementation(kotlin("test"))
+//    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
 tasks.test {

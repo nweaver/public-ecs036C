@@ -1,6 +1,5 @@
 package edu.ucdavis.cs.ecs036c
 
-import jdk.incubator.vector.VectorOperators.Binary
 
 
 class BinaryTreeNode<T>(val data: T, var left: BinaryTreeNode<T>?, var right: BinaryTreeNode<T>?) {
@@ -143,6 +142,58 @@ class OrderedBinaryTree<T: Comparable<T>> {
             return containsInternal(at.right)
         }
         return containsInternal(root)
+    }
+
+    /*
+     * Removal logic:
+     *
+     * If the node has no children: it just gets replaced with null.
+     * If the node only has left or right children, it gets replaced
+     * with left or right.
+     *
+     * If the node has BOTH a left and right child, replace the data
+     * by finding the smallest item on the right child, deleting THAT node
+     * and REPLACING the data in the current node with that node.
+     */
+    fun remove(data: T){
+        if (data !in this) {
+            throw Exception("Key doesn't exist")
+        }
+        // If there is no left subtree, return this data and the right subtree.
+        // Otherwise, set the new left subtree to the result of this function
+        // and return both self and the new value.
+        fun removeSmallest(at: BinaryTreeNode<T>): Pair<BinaryTreeNode<T>?, T> {
+            if(at.left == null){
+                return Pair(at.right, at.data)
+            }
+            val (tree, newData) = removeSmallest(at.left!!)
+            at.left = tree
+            return Pair(at, newData)
+        }
+
+        fun removeInternal(at: BinaryTreeNode<T>): BinaryTreeNode<T>?{
+            if (at.data == data) {
+                if(at.left == null ){
+                    return at.right
+                }
+                else if (at.right == null){
+                    return at.left
+                }
+                else {
+                    val (right, newData) = removeSmallest(at.right!!)
+                    // Return a NEW node because we specified data
+                    // in the node as val, and I don't want to change
+                    // the type
+                    return BinaryTreeNode(newData, at.left, right)
+                }
+            } else if (data < at.data){
+                at.left = removeInternal(at.left!!)
+            } else {
+                at.right = removeInternal(at.right!!)
+            }
+            return at
+        }
+        root = removeInternal(root!!)
     }
 }
 

@@ -1,6 +1,5 @@
 package edu.ucdavis.cs.ecs036c
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 fun testTree(): BinaryTreeNode<String> =
@@ -50,11 +49,12 @@ class BinaryTreeNodeTest {
         assert(goodTree.levelOrderTraversal().joinToString { it } == "A, B, C, D, E, F, G, H, I, J, K")
 
         for(x in 0..<100){
-            for(y in 0..<10){
+            for(y in 0..<100){
                 val testData : Array<Int?> = arrayOfNulls(x)
                 for(z in 0..<x){
                     testData[z] = z
                 }
+                @Suppress("UNCHECKED_CAST")
                 testData as Array<Int>
                 testData.shuffle()
                 val testTree = toOrderedTree(*testData)
@@ -64,6 +64,17 @@ class BinaryTreeNodeTest {
                     assert(i in testTree)
                     assert((i + x) !in testTree)
                     i++
+                }
+                testData.shuffle()
+                for (data in testData){
+                    assert(data in testTree)
+                    testTree.remove(data)
+                    assert(data !in testTree)
+                    var a = -1
+                    for (b in testTree){
+                        assert(a < b)
+                        a = b
+                    }
                 }
             }
         }

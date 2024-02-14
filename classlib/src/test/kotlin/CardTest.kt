@@ -3,9 +3,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 import edu.ucdavis.cs.ecs036c.*
+import org.junit.jupiter.api.Timeout
 
 import java.security.SecureRandom
+import java.time.Duration
 import kotlin.random.asKotlinRandom
+
 
 class CardTest {
 
@@ -50,5 +53,28 @@ class CardTest {
 
     @Test
     fun getSuite() {
+    }
+
+
+    /*
+     * This does NOT ACTUALLY WORK because JUnit5 Timeout is NOT actually
+     * enforced by killing the offending thread.  You HAVE to use assertTimeoutPreemptively!
+     *
+     * Worse, the LATEST version of JUnit5 is up to date, but the kotlin testing framework is not...
+     * threadMode = Timeout.ThreadMode.SEPARATE_THREAD would work but hey...
+     *
+     */
+    // @Test
+    fun testTimeout(){
+        while(true) {
+
+        }
+    }
+
+    @Test
+    @Timeout(1, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    fun testTimeoutAssertion(){
+        testTimeout()
+        print("Test done")
     }
 }
