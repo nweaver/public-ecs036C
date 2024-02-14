@@ -4,71 +4,67 @@ from tree import TreeNode
 import random
 
 
-def getPriorBalance(node):
-    if node == None:
-        return None
-    return node.balance
+class OrderedTree:
 
-def rotateLeft(node):
-    newtop = node.right
-    node.right = newtop.left
-    newtop.left = node
-    newtop.left.update_height()
-    newtop.update_height()
-    return newtop
+    @staticmethod
+    def rotate_left(node):
+        new_top = node.right
+        node.right = new_top.left
+        new_top.left = node
+        new_top.left.update_height()
+        new_top.update_height()
+        return new_top
 
-def rotateRight(node):
-    newtop = node.left
-    node.left = newtop.right
-    newtop.right = node
-    newtop.right.update_height()
-    newtop.update_height()
-    return newtop
-
-
-class OrderedTree():
+    @staticmethod
+    def rotate_right(node):
+        new_top = node.left
+        node.left = new_top.right
+        new_top.right = node
+        new_top.right.update_height()
+        new_top.update_height()
+        return new_top
 
     def __init__(self, *args):
         self.tree = None
         for a in args:
             for data in a:
-                self.AVLInsert(data)
+                self.avl_insert(data)
 
-
-    def AVLInsert(self, data):
-        def AVLInsertInternal(node):
-            if node == None:
+    def avl_insert(self, data):
+        def avl_insert_internal(node):
+            if node is None:
                 return TreeNode(data, None, None)
             elif data < node.data:
-                node.left = AVLInsertInternal(node.left)
+                node.left = avl_insert_internal(node.left)
             else:
-                node.right = AVLInsertInternal(node.right)
+                node.right = avl_insert_internal(node.right)
             node.update_height()
-            return AVLRebalance(node)
-        def AVLRebalance(node):
-            if abs(node.balance()) < 2:
-                return node
-            if node.balance() == 2:
-                # Right heavy.  Is our right subtree left heavy?
-                if node.right.balance() == -1:
-                    node.right = rotateRight(node.right)
-                return rotateLeft(node)
-            if node.balance() == -2:
-                if node.left.balance() == 1:
-                    node.left = rotateLeft(node.left)
-                return rotateRight(node)
+            return OrderedTree.avl_rebalance(node)
+        self.tree = avl_insert_internal(self.tree)
 
-        self.tree = AVLInsertInternal(self.tree)
+    @staticmethod
+    def avl_rebalance(node):
+        if abs(node.balance()) < 2:
+            return node
+        if node.balance() == 2:
+            # Right heavy.  Is our right subtree left heavy?
+            if node.right.balance() == -1:
+                node.right = OrderedTree.rotate_right(node.right)
+            return OrderedTree.rotate_left(node)
+        if node.balance() == -2:
+            if node.left.balance() == 1:
+                node.left = OrderedTree.rotate_left(node.left)
+            return OrderedTree.rotate_right(node)
 
     def __repr__(self):
         return repr(self.tree)
 
     def is_ordered(self):
-        if self.tree == None:
+        if self.tree is None:
             return True
         last = None
         for x in self.tree:
-            if last == None or last <= x:
+            if last is None or last <= x:
                 last = x
             else:
                 return False
@@ -76,13 +72,13 @@ class OrderedTree():
 
     def assert_correct_balance(self):
         def check_balance(node):
-            if node == None:
+            if node is None:
                 return
             balance = node.balance()
-            if node.left :
+            if node.left:
                 node.left.update_height()
                 check_balance(node.left)
-            if node.right :
+            if node.right:
                 node.right.update_height()
                 check_balance(node.right)
             node.update_height()
@@ -90,11 +86,9 @@ class OrderedTree():
 
         check_balance(self.tree)
 
-
-
     def __contains__(self, data):
         def internal(tree):
-            if tree == None:
+            if tree is None:
                 return False
             elif tree.data == data:
                 return True
@@ -103,13 +97,14 @@ class OrderedTree():
             return internal(tree.right)
         return internal(self.tree)
 
-def avlTesting():
-    test = OrderedTree([1,2,3,4,5,6,7,8,9])
+
+def avl_testing():
+    test = OrderedTree([1, 2, 3, 4, 5, 6, 7, 8, 9])
     print(test)
     test.assert_correct_balance()
 
 
-if __name__ == "__main__":
+def full_test():
     alphabet = "ABCDEFGHIJK"
     data = []
     for x in alphabet:
@@ -138,3 +133,7 @@ if __name__ == "__main__":
             assert x not in test
     assert test.is_ordered()
     test.assert_correct_balance()
+
+
+if __name__ == "__main__":
+    full_test()

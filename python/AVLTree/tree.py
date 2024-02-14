@@ -3,7 +3,7 @@
 from collections import deque
 
 def get_height(node):
-    if node == None:
+    if node is None:
         return 0
     return node.height
 
@@ -37,7 +37,7 @@ class TreeNode:
                 yield from self.left._nodes()
             else:
                 yield self.left
-        if self.right != None:
+        if self.right is not None:
             if isinstance(self.right, TreeNode):
                 yield from self.right._nodes()
             else:
@@ -55,7 +55,10 @@ class TreeNode:
                 return False
             s.add(x)
         return True
-    
+
+    def __bool__(self):
+        return True
+
     # This is an in-order iteration
     def __iter__(self):
         assert self.is_well_formed()
@@ -92,9 +95,9 @@ class TreeNode:
         while len(queue) > 0:
             at = queue.popleft()
             yield at.data
-            if at.left != None:
+            if at.left is not None:
                 queue.append(at.left)
-            if at.right != None:
+            if at.right is not None:
                 queue.append(at.right)
             
             
