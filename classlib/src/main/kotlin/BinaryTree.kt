@@ -156,9 +156,7 @@ class OrderedBinaryTree<T: Comparable<T>> {
      * and REPLACING the data in the current node with that node.
      */
     fun remove(data: T){
-        if (data !in this) {
-            throw Exception("Key doesn't exist")
-        }
+
         // If there is no left subtree, return this data and the right subtree.
         // Otherwise, set the new left subtree to the result of this function
         // and return both self and the new value.
@@ -173,26 +171,18 @@ class OrderedBinaryTree<T: Comparable<T>> {
 
         fun removeInternal(at: BinaryTreeNode<T>): BinaryTreeNode<T>?{
             if (at.data == data) {
-                if(at.left == null ){
-                    return at.right
-                }
-                else if (at.right == null){
-                    return at.left
-                }
+                if(at.left == null ) return at.right
+                else if (at.right == null) return at.left
+
                 else {
                     val (right, newData) = removeSmallest(at.right!!)
-                    // Return a NEW node because we specified data
-                    // in the node as val, and I don't want to change
-                    // the type
                     return BinaryTreeNode(newData, at.left, right)
                 }
-            } else if (data < at.data){
-                at.left = removeInternal(at.left!!)
-            } else {
-                at.right = removeInternal(at.right!!)
-            }
+            } else if (data < at.data) at.left = removeInternal(at.left!!)
+            else at.right = removeInternal(at.right!!)
             return at
         }
+        if (data !in this) return
         root = removeInternal(root!!)
     }
 }
