@@ -26,6 +26,9 @@ replay_pid*
 # Emacs
 *~
 
+# python
+__pycache__
+
 # IntelliJ/kotlin
 
 .gradle
