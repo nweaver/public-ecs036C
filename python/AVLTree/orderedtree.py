@@ -105,6 +105,7 @@ def avl_testing():
 
 
 def full_test():
+    avl_testing()
     alphabet = "ABCDEFGHIJK"
     data = []
     for x in alphabet:
